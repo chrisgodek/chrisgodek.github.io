@@ -30,20 +30,20 @@
     <h1>Chris Godek</h1>
     <h2>Apps</h2>
     <ul>
-      <li data-repo="seating-chart"><a href="https://chrisgodek.github.io/seating-chart/">Seating Chart</a></li>
+      <li><a data-built href="https://chrisgodek.github.io/seating-chart/">Seating Chart</a></li>
     </ul>
   </main>
   <script>
-    // Show each app's last update date, read from its GitHub repo's latest commit.
-    document.querySelectorAll('li[data-repo]').forEach(function (li) {
-      fetch('https://api.github.com/repos/chrisgodek/' + li.dataset.repo + '/commits?per_page=1')
-        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-        .then(function (commits) {
-          var date = new Date(commits[0].commit.committer.date);
+    // Show each app's last build date, read from its GitHub Pages Last-Modified header.
+    document.querySelectorAll('li a[data-built]').forEach(function (a) {
+      fetch(a.href, { method: 'HEAD', cache: 'no-store' })
+        .then(function (r) {
+          var date = new Date(r.headers.get('Last-Modified'));
+          if (isNaN(date)) return;
           var span = document.createElement('span');
           span.className = 'updated';
           span.textContent = '— updated ' + date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-          li.appendChild(span);
+          a.after(span);
         })
         .catch(function () {});
     });
