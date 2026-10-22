@@ -22,7 +22,7 @@
     li { margin: 0.35rem 0; }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .updated { color: var(--muted); font-size: 0.85em; margin-left: 0.4em; }
+    .updated { color: var(--muted); font-size: 0.85em; }
   </style>
 </head>
 <body>
@@ -30,7 +30,7 @@
     <h1>Chris Godek</h1>
     <h2>Apps</h2>
     <ul>
-      <li><a data-built href="/seating-chart/">Seating Chart</a></li>
+      <li><a data-built href="/seating-chart/">Seating Chart</a> <span class="updated">· <a href="/seating-chart/updates.html">What's new</a></span></li>
     </ul>
   </main>
   <script>
@@ -43,7 +43,7 @@
           var span = document.createElement('span');
           span.className = 'updated';
           span.textContent = '— updated ' + date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-          a.after(span);
+          a.after(' ', span);
         })
         .catch(function () {});
     });
